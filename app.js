@@ -1,5 +1,6 @@
 import discord from 'discord.js';
 import { RootCommand } from './commands/root';
+import { Handlers } from './handlers/handlers';
 import fs from 'fs';
 
 class App
@@ -10,21 +11,14 @@ class App
         this.client          = client;
         this.guild           = getByID(this.client.guilds, settings.guild); // Popcorn.moe :)
         this.botsChannel     = getByID(this.guild.channels, settings.channel.bots); // #bots
-        this.allowedChannels = settings.allowedChannels.map(channel => getByID(this.guild.channels, channel));
+        this.commandChannels = settings.commandChannels.map(channel => getByID(this.guild.channels, channel));
         this.rootCommand     = new RootCommand(this);
+        this.handlers        = new Handlers(this);
     }
 
     init()
     {
-        this.client.on('message', msg =>
-        {
-            console.log(msg.content);
-            if (msg.content.startsWith(this.settings.prefix) && !msg.content.startsWith(this.settings.prefix + this.settings.prefix))
-            {
-                console.log(msg.content);
-                this.rootCommand.handleCommand(msg, msg.content.slice(1).split(' '), 0);
-            }
-        });
+        this.client.on('message', message => this.handlers.dispatch(message));
     }
 }
 

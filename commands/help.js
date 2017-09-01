@@ -22,6 +22,8 @@ class HelpCommand extends SimpleCommand
 
     execute(message, args)
     {
+        message.delete();
+
         console.log(args);
         if (args.length == 0)
         {
@@ -85,7 +87,6 @@ function allCategories(commands)
 
     return set;
 }
-
 
 export function register(app, registerOne)
 {

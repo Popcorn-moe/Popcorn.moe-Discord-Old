@@ -55,3 +55,9 @@ export function asUser(message, string)
 export function sendAndMention(app, embed, user) { app.botsChannel.send(getMention(user), { embed }); }
 
 export function getMention(user) { return `<@${user.id}>`; }
+
+export function randIn(array)
+{
+    const rand = Math.floor(Math.random() * Object.keys(array).length);
+    return array[rand];
+}

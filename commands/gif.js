@@ -1,6 +1,7 @@
 import discord from 'discord.js';
 import { Category, SimpleCommand } from './index';
 import * as utils from '../utils';
+import * as embeds from '../embeds';
 
 const gifCategory = new Category('Commandes de GIF', 'Commandes basées sur l\'envoi de gif');
 
@@ -38,17 +39,15 @@ class GifCommand extends SimpleCommand
         const embed = new discord.RichEmbed()
             .setTitle(this.msg(from.username, to.username))
             .setColor(0x00AE86)
-            .setImage(randGif(this.name));
+            .setImage(utils.randIn(settings[this.name].gifs));
 
         message.channel.send({ embed });
     }
 
     error(message, err)
     {
-        const embed = new discord.RichEmbed()
-            .setTitle(err)
-            .setColor(0xdb1348)
-            .setImage(this.app.settings.images.error);
+        const embed = embeds.error(this.app)
+            .setTitle(err);
 
         message.channel.send({ embed });
     }
@@ -63,13 +62,6 @@ class GifCommand extends SimpleCommand
             .replace('{0}', first)
             .replace('{1}', second);
     }
-}
-
-function randGif(what)
-{
-    const rand = Math.floor(Math.random() * Object.keys(settings[what].gifs).length);
-    console.log(rand);
-    return settings[what].gifs[rand];
 }
 
 let settings;

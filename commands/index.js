@@ -1,4 +1,4 @@
-import discord from 'discord.js';
+import * as embeds from '../embeds';
 
 export class AbstractCommand
 {
@@ -23,16 +23,14 @@ export class SimpleCommand extends AbstractCommand
 
     handleCommand(message, args, depth)
     {
-        function usageError()
+        const usageError = () => //Arrow function to keep 'this'
         {
-            const embed = new discord.RichEmbed()
+            const embed = embeds.error(this.app)
                 .setTitle('Moi pas comprendre.')
-                .setDescription(this.app.settings.prefix + args.join(' ') + ' ' + this.usage)
-                .setColor(0xdb1348)
-                .setImage(this.app.settings.images.error);
+                .setDescription(this.app.settings.prefix + args.join(' ') + ' ' + this.usage);
 
             message.channel.send({ embed });
-        }
+        };
 
         this.execute(message, args.slice(depth), usageError);
     }
@@ -80,11 +78,9 @@ export class SimpleCompoundCommand extends AbstractCommand
 
     notFound(message)
     {
-        const embed = new discord.RichEmbed()
+        const embed = embeds.error(this.app)
             .setTitle('Impossible de trouver la commande.')
-            .setDescription('Utilisez la commande **`help [commande]** pour obtenir de l\'aide sur une commande')
-            .setColor(0xdb1348)
-            .setImage(this.app.settings.images.error);
+            .setDescription('Utilisez la commande **`help [commande]** pour obtenir de l\'aide sur une commande');
 
         message.channel.send({ embed });
     }

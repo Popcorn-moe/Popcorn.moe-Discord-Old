@@ -3,6 +3,8 @@ import * as gif from './gif';
 import * as echo from './test';
 import * as help from './help';
 
+const commands = [gif, echo, help];
+
 export class RootCommand extends SimpleCompoundCommand
 {
     constructor(app)
@@ -16,13 +18,8 @@ export class RootCommand extends SimpleCompoundCommand
             []
         );
 
-        const self = this;
-
-        const regCmd = command => self.registerCommand(command, self);
-
-        echo.register(app, regCmd);
-        gif.register(app, regCmd);
-        help.register(app, regCmd);
+        const regCmd = command => this.registerCommand(command, this);
+        commands.forEach(file => file.register(app, regCmd));
     }
 
     registerCommand(command, self = this) //2nd parameter optional
