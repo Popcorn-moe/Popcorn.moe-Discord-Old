@@ -30,7 +30,6 @@ class FeaturesHandler extends Handler
     {
         if (message.author === this.app.client.user) return;
         message.delete();
-        console.log(message.content);
 
         const embed = new discord.RichEmbed()
             .setTitle(message.content)

@@ -29,9 +29,15 @@ class GifCommand extends SimpleCommand
             return;
         }
 
-        utils.asUser(message, args[0])
-            .then(user => this.response(message, message.author, user))
-            .catch(err => this.error(message, err));
+        const user = utils.asUser(message, args[0]);
+        if (user)
+        {
+            this.response(message, message.author, user);
+        }
+        else
+        {
+            this.error(message)
+        }
     }
 
     response(message, from, to)
@@ -47,7 +53,7 @@ class GifCommand extends SimpleCommand
     error(message, err)
     {
         const embed = embeds.error(this.app)
-            .setTitle(err);
+            .setTitle('Aucun utilisateur trouvé 😭');
 
         message.channel.send({ embed });
     }
