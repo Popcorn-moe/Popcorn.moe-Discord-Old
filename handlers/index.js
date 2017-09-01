@@ -1,6 +1,6 @@
-export class MessageHandler
+export class Handler
 {
-    constructor(app, name, channels, priority)
+    constructor(app, name, channels = [null], priority = HandlerPriority.NORMAL)
     {
         this.app      = app;
         this.name     = name;
@@ -9,7 +9,7 @@ export class MessageHandler
     }
 
     // Returns: boolean - message consumed
-    handleMessage(message)
+    handleEvent(event, obj)
     {
         return false;
     }

@@ -1,6 +1,7 @@
 import * as command from './command';
+import * as features from './features';
 
-const handlers = [command];
+const handlers = [command, features];
 
 export class Handlers
 {
@@ -15,21 +16,43 @@ export class Handlers
 
     registerHandler(handler, self = this)
     {
-        console.log(`Registering message handler '${handler.name}'.`);
+        console.log(`Registering handler '${handler.name}'.`);
         self.handlers.push(handler);
     }
 
-    dispatch(message)
+    //Todo find a better way to do this
+    init()
     {
-        if (message.guild !== this.app.guild) return;
+        const listen = {
+            'message'              : msg => this.dispatchEvent('message',
+                                                               msg,
+                                                               msg.guild,
+                                                               msg.channel),
+            'messageReactionAdd'   : (reaction, user) => this.dispatchEvent('messageReactionAdd',
+                                                                            { reaction, user },
+                                                                            reaction.message.guild,
+                                                                            reaction.message.channel),
+            'messageReactionRemove': (reaction, user) => this.dispatchEvent('messageReactionRemove',
+                                                                            { reaction, user },
+                                                                            reaction.message.guild,
+                                                                            reaction.message.channel)
+        };
 
-        const handlers = this.handlers.sort((f, s) => f.priority > s.priority);
+        Object.entries(listen).forEach(([event, callback]) => this.app.client.on(event, callback));
+    }
 
-        for (const handler of handlers)
+    dispatchEvent(event, obj, guild = null, channel = null)
+    {
+        if (guild && guild !== this.app.guild) return;
+
+        const handlers  = this.handlers.filter(h => h.channels.includes(channel));
+        const consumers = handlers.sort((f, s) => f.priority < s.priority);
+
+        for (const handler of consumers)
         {
-            if (handler.handleMessage(message)) return;
+            if (handler.handleEvent(event, obj)) return;
         }
 
-        this.handlers.forEach(h => h.monitor(message));
+        handlers.forEach(h => h.monitor(obj));
     }
 }

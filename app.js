@@ -11,6 +11,7 @@ class App
         this.client          = client;
         this.guild           = getByID(this.client.guilds, settings.guild); // Popcorn.moe :)
         this.botsChannel     = getByID(this.guild.channels, settings.channel.bots); // #bots
+        this.featuresChannel = getByID(this.guild.channels, settings.channel.features); // #features
         this.commandChannels = settings.commandChannels.map(channel => getByID(this.guild.channels, channel));
         this.rootCommand     = new RootCommand(this);
         this.handlers        = new Handlers(this);
@@ -18,7 +19,7 @@ class App
 
     init()
     {
-        this.client.on('message', message => this.handlers.dispatch(message));
+        this.handlers.init();
     }
 }
 

@@ -1,14 +1,16 @@
-import { HandlerPriority, MessageHandler } from './index';
+import { Handler, HandlerPriority } from './index';
 
-class CommandHandler extends MessageHandler
+class CommandHandler extends Handler
 {
     constructor(app)
     {
-        super(app, 'Command', app.allowedChannels, HandlerPriority.NORMAL);
+        super(app, 'Command', app.guild.channels.array(), HandlerPriority.NORMAL);
     }
 
-    handleMessage(message)
+    handleEvent(event, message)
     {
+        if (event !== 'message') return;
+
         if (message.content.startsWith(this.app.settings.prefix))
         {
             this.app.rootCommand.handleCommand(message, message.content.slice(1).split(' '), 0);
