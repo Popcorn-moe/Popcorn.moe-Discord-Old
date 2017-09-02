@@ -55,7 +55,8 @@ class GifCommand extends SimpleCommand
         const embed = embeds.error(this.app)
             .setTitle('Aucun utilisateur trouvé 😭');
 
-        message.channel.send({ embed });
+        message.channel.send({ embed })
+            .then(message => embeds.timeDelete(message));
     }
 
     get desc() { return settings[this.name].desc; }

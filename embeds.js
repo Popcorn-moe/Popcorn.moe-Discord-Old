@@ -9,3 +9,8 @@ export function error(app)
         .setColor(0xdb1348)
         .setImage(utils.randIn(app.settings.images.error));
 }
+
+export function timeDelete(message)
+{
+    setTimeout(() => message.delete(), 30 * 1000);
+}

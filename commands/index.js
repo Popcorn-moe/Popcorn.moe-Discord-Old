@@ -29,7 +29,8 @@ export class SimpleCommand extends AbstractCommand
                 .setTitle('Moi pas comprendre.')
                 .setDescription(this.app.settings.prefix + args.join(' ') + ' ' + this.usage);
 
-            message.channel.send({ embed });
+            message.channel.send({ embed })
+                .then(message => embeds.timeDelete(message));
         };
 
         this.execute(message, args.slice(depth), usageError);
@@ -82,7 +83,8 @@ export class SimpleCompoundCommand extends AbstractCommand
             .setTitle('Impossible de trouver la commande.')
             .setDescription('Utilisez la commande **`help [commande]** pour obtenir de l\'aide sur une commande');
 
-        message.channel.send({ embed });
+        message.channel.send({ embed })
+            .then(message => embeds.timeDelete(message));
     }
 }
 
