@@ -2,6 +2,7 @@ import discord from 'discord.js';
 import { RootCommand } from './commands/root';
 import { Handlers } from './handlers/handlers';
 import fs from 'fs';
+import { VoiceManager, YoutubeStreamer } from './voice_manager';
 
 class App
 {
@@ -15,6 +16,7 @@ class App
         this.commandChannels = settings.commandChannels.map(channel => getByID(this.guild.channels, channel));
         this.rootCommand     = new RootCommand(this);
         this.handlers        = new Handlers(this);
+        this.voiceManager    = new VoiceManager(this);
     }
 
     init()
@@ -28,7 +30,6 @@ function getByID(smth, id)
     return smth.array()
         .find(o => o.id == id); // #bots
 }
-
 
 const client = new discord.Client();
 

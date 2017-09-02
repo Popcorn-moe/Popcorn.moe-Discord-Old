@@ -2,8 +2,9 @@ import { SimpleCompoundCommand } from './index';
 import * as gif from './gif';
 import * as echo from './test';
 import * as help from './help';
+import * as voice from './voice';
 
-const commands = [gif, echo, help];
+const commands = [gif, echo, help, voice];
 
 export class RootCommand extends SimpleCompoundCommand
 {
