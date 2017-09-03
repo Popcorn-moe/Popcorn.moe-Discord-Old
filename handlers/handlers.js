@@ -1,7 +1,8 @@
 import * as command from './command';
 import * as features from './features';
+import * as macros from './macros';
 
-const handlers = [command, features];
+const handlers = [command, features, macros];
 
 export class Handlers
 {

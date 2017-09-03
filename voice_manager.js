@@ -215,6 +215,20 @@ export class VoiceManager
         this.queue.splice(num - 1, num);
     }
 
+    //Reject if already busy
+    //Used for macros
+    connectionFor(channel)
+    {
+        return new Promise(
+            (resolve, reject) =>
+            {
+                if (this.playing) reject('Déjà occupé');
+
+                channel.join().then(connection => resolve(connection));
+            }
+        );
+    }
+
     get volume()
     {
         return this.cachedVolume;
