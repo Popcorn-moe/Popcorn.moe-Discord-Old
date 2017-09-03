@@ -23,8 +23,6 @@ class HelpCommand extends SimpleCommand
     execute(message, args)
     {
         message.delete();
-
-        console.log(args);
         if (args.length == 0)
         {
             utils.sendAndMention(this.app, wholeHelp(this.app), message.author);

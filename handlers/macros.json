@@ -16,8 +16,7 @@
   },
   "nyanpasu!": {
     "type": "message",
-    "content": "Nico-nico ni! https://www.youtube.com/watch?v=JAEbJs-rnVc",
+    "content": "Nyanpasu! https://www.youtube.com/watch?v=JAEbJs-rnVc",
     "audio": "./assets/nyanpasu.mp3"
   }
-}
 }
