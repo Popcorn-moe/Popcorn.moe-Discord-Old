@@ -3,5 +3,21 @@
     "type": "message",
     "content": "Tuturu! https://www.youtube.com/watch?v=ImhfIv5NSqY",
     "audio": "./assets/tuturu.mp3"
+  },
+  "kyun!": {
+    "type": "message",
+    "content": "Moe moe... Kyun! https://www.youtube.com/watch?v=2ac7GnUUy80",
+    "audio": "./assets/moemoekyun.mp3"
+  },
+  "nico nico ni!": {
+    "type": "message",
+    "content": "Nico-nico ni! https://www.youtube.com/watch?v=T4iC52d-fVY",
+    "audio": "./assets/niconiconi.mp3"
+  },
+  "nyanpasu!": {
+    "type": "message",
+    "content": "Nico-nico ni! https://www.youtube.com/watch?v=JAEbJs-rnVc",
+    "audio": "./assets/nyanpasu.mp3"
   }
+}
 }
